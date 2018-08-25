@@ -3,6 +3,11 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+import VueMapbox from "vue-mapbox";
+import Mapbox from "mapbox-gl";
+
+Vue.use(VueMapbox, { mapboxgl: Mapbox });
+
 Vue.config.productionTip = false;
 
 new Vue({
