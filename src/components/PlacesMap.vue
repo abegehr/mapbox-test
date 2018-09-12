@@ -9,7 +9,7 @@
     :bearing="options.bearing"
     @load="load"
 >
-  <mgl-marker v-for="(marker, i) in markers" :coordinates="marker.coords" :color="marker.color" :key="i"></mgl-marker>
+  <!-- <mgl-marker v-for="(marker, i) in markers" :coordinates="marker.coords" :color="marker.color" :key="i"></mgl-marker> -->
 </mgl-map>
 </template>
 
@@ -29,7 +29,7 @@ export default {
       accessToken: config.mapbox.accessToken,
       mapStyle: config.mapbox.mapStyle,
       options: {
-        minZoom: 15,
+        minZoom: 13,
         center: [13.449081 - 0.01, 52.50504],
         zoom: 16.0,
         pitch: 45,
@@ -59,6 +59,7 @@ export default {
         }
       }
 
+      // 3d buildings
       map.addLayer(
         {
           id: "3d-buildings",
@@ -91,6 +92,27 @@ export default {
               ["get", "min_height"]
             ],
             "fill-extrusion-opacity": 0.6
+          }
+        },
+        labelLayerId
+      );
+
+      // point overlay
+      map.addSource("point", {
+        type: "geojson",
+        data: {
+          type: "Point",
+          coordinates: [13.449081, 52.50504]
+        }
+      });
+      map.addLayer(
+        {
+          id: "point",
+          source: "point",
+          type: "circle",
+          paint: {
+            "circle-radius": 20,
+            "circle-color": "#007cbf"
           }
         },
         labelLayerId
